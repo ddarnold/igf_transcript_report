@@ -53,10 +53,12 @@ def process_file(file_path, log_file):
 def process_folder(folder_path):
     log_path = os.path.join(folder_path, "log.txt")
     with open(log_path, 'w', encoding='utf-8') as log_file:
-        for filename in os.listdir(folder_path):
-            if filename.endswith(".txt"):
-                file_path = os.path.join(folder_path, filename)
-                process_file(file_path, log_file)
+        # Get all files ending with .txt and sort them alphabetically
+        txt_files = sorted([f for f in os.listdir(folder_path) if f.endswith(".txt")])
+        
+        for filename in txt_files:
+            file_path = os.path.join(folder_path, filename)
+            process_file(file_path, log_file)
 
 if __name__ == "__main__":
     folder_path = "."  # Replace with the path to your folder
