@@ -36,7 +36,7 @@ def process_file(file_path, log_file):
     
     # Log if the file contain >MODERATOR speaker 
     if (">MODERATOR" in content):
-        log_file.write("contain >MODERATOR\n")
+        log_file.write("contains >MODERATOR\n")
         
     # Function to check if all tags are properly closed
     tags = re.findall(r'<[^>]*>', content)
