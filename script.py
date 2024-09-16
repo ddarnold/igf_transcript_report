@@ -35,7 +35,7 @@ def process_file(file_path, log_file):
         log_file.write(f"contain '>>':{count}\n")
     
     # Log if the file contain >MODERATOR speaker 
-    if not (">MODERATOR" in content):
+    if (">MODERATOR" in content):
         log_file.write("contain >MODERATOR\n")
         
     # Function to check if all tags are properly closed
@@ -48,6 +48,8 @@ def process_file(file_path, log_file):
     speakers = set(re.findall(r'<speaker>(.*?)</speaker>', content))
     if speakers:
         log_file.write(f"Speakers:{', '.join(speakers)}\n")
+
+    log_file.write("\n")
 
 # Main script to process all .txt files in the same folder
 def process_folder(folder_path):
