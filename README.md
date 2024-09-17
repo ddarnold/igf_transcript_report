@@ -1,4 +1,4 @@
-# Transcript Processing Script
+﻿# Transcript Processing Script
 
 ## Overview
 This script processes all `.txt` files in a specified folder to check for certain tags (`<transcript>`, `<speaker>`, etc.) and logs relevant information about their structure and content. It also performs basic tag validation and replacement of specific patterns.
@@ -43,6 +43,7 @@ The script creates a `log.txt` file in the same folder, where it logs all the in
 
 ### Script Structure
 
+- **`check_proper_tag_closing(content, log_file)`**: This function processes each **<** tag individually and checks if it is properly closed with **>**.
 - **`process_file(file_path, log_file)`**: This function processes each file individually. It reads the file content, performs checks, and logs the findings into the `log.txt` file.
 - **`process_folder(folder_path)`**: This function scans all `.txt` files in the folder and calls `process_file` for each file.
 
@@ -59,8 +60,8 @@ The script creates a `log.txt` file in the same folder, where it logs all the in
 example.txt:
 does not contain <transcript> and </transcript> tags.
 contains <speaker> tags outside <transcript>... block: Before
-contain '>>': 5
-contain >MODERATOR
+contains '>>': 5
+contains >MODERATOR
 contains improperly closed tags (some '<' tags are not followed by '>').
 Speakers: John, Jane, Moderator
 ```

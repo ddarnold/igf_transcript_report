@@ -1,6 +1,17 @@
 import os
 import re
 
+def check_proper_tag_closing(content, log_file):
+    # Look for any '<' followed by content that is not properly closed by '>'
+    tags = re.finditer(r'<[^>]*', content)
+    
+    for tag in tags:
+        # Check if there is an opening '<' that doesn't have a corresponding '>' before the next tag begins
+        tag_str = tag.group(0)
+        if '>' not in tag_str:
+            log_file.write(f"contains improperly closed tags: {tag_str} (missing '>')\n")
+            break
+
 # Function to process each file
 def process_file(file_path, log_file):
     with open(file_path, 'r', encoding='utf-8') as f:
@@ -32,17 +43,14 @@ def process_file(file_path, log_file):
     # Count occurrences of ">>"
     count = content.count(">>")
     if count > 0:
-        log_file.write(f"contain '>>':{count}\n")
+        log_file.write(f"contains '>>':{count}\n")
     
     # Log if the file contain >MODERATOR speaker 
     if (">MODERATOR" in content):
         log_file.write("contains >MODERATOR\n")
-        
-    # Function to check if all tags are properly closed
-    tags = re.findall(r'<[^>]*>', content)
-    for i in range(len(tags) - 1):
-        if not tags[i].endswith('>'):
-            log_file.write(f"{file_path} contains improperly closed tags (some '<' tags are not followed by '>').\n")
+    
+    # Call the tag checking function
+    check_proper_tag_closing(content, log_file)
     
     # Find all unique strings between <speaker> and </speaker> tags
     speakers = set(re.findall(r'<speaker>(.*?)</speaker>', content))
